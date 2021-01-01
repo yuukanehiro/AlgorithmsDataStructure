@@ -1,6 +1,30 @@
 <?php
 
-// 1, 1, 2, 3, 5, 8, 13, 21 ...
+$max = 400;
+$flag = false;
+main($flag, $max);
+
+
+function main(bool $flag = true, int $max) {
+    switch ($flag) {
+        // テスト
+        case 0:
+            testFibonacciSequence();
+            break;
+        // 実行
+        case 1:
+            var_dump(fibonacciSequence($max));
+            break;
+    }
+}
+
+/**
+ * フィボナッチ数列生成
+ *
+ * @param int $max
+ * @return array $data
+ * // 1, 1, 2, 3, 5, 8, 13, 21 ...
+ */
 function fibonacciSequence(int $max, array $data = [])
 {
     $i = 2;
@@ -15,11 +39,35 @@ function fibonacciSequence(int $max, array $data = [])
         $data[$i] = $temp;
         $i++;
     }
-    return var_dump($data);
+    return $data;
+    // return var_dump($data);
 }
 
-$max = 400;
-fibonacciSequence($max);
+
+/**
+ * テストコード
+ */
+function testFibonacciSequence()
+{
+    for ($i = 0; $i < 100; $i++) {
+        $max = rand(100, 1000);
+        $result = fibonacciSequence($max);
+        $count = count($result);
+
+        $diceNum = rand(1, 6);
+        $n = $count - $diceNum;
+        $a = $n -2;
+        $b = $n -1;
+
+        if ($result[$n] !== (int) ($result[$a] + $result[$b])) {
+            var_dump($result);
+            echo '異常な値';
+            return;
+        }
+    }
+    print("正常");
+}
+
 
 // array(14) {
 //     [0]=>
