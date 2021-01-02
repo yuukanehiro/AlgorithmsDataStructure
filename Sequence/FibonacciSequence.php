@@ -20,10 +20,10 @@ function main(bool $flag = true, int $max) {
 
 /**
  * フィボナッチ数列生成
+ * 1, 1, 2, 3, 5, 8, 13, 21 ...
  *
  * @param int $max
  * @return array $data
- * // 1, 1, 2, 3, 5, 8, 13, 21 ...
  */
 function fibonacciSequence(int $max, array $data = [])
 {
