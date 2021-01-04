@@ -6,12 +6,12 @@ $max = count($data);
 // 要素数の繰り返し
 for ($i = 0; $i < $max; $i++) {
     // 要素数-1回の繰り返し
-    for ($n = 1; $n < $max; $n++) {
+    for ($j = 1; $j < $max; $j++) {
         // 隣同士を比較して順番に入れ替える
-        if ($data[$n-1] > $data[$n]) {
-            $temp = $data[$n];
-            $data[$n] = $data[$n-1];
-            $data[$n-1] = $temp;
+        if ($data[$j-1] > $data[$j]) {
+            $temp = $data[$j];
+            $data[$j] = $data[$j-1];
+            $data[$j-1] = $temp;
         }
     }
 }
