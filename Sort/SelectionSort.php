@@ -1,9 +1,10 @@
 <?php
 
-$list = range(0, 15);
+$list = range(0, 100);
 shuffle($list);
-
+// 実行
 main($list, true);
+
 
 function main(array $list, bool $is_test = false) {
     switch ($is_test) {
@@ -17,6 +18,7 @@ function main(array $list, bool $is_test = false) {
             break;
     }
 }
+
 
 /**
  * 選択ソート
@@ -51,7 +53,14 @@ function selectionSort(array $list): array
  */
 function testSelectionSort(array $list)
 {
+    $test_count = 1000; // テスト回数
+
     $clone_list = $list;
     sort($clone_list);
-    return $clone_list === selectionSort($list);
+    for ($i = 0; $i < $test_count; $i++) {
+        if ($clone_list !== selectionSort($list)) {
+            return false;
+        }
+    }
+    return true;
 }
