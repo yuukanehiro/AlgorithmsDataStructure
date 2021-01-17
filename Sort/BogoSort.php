@@ -24,6 +24,7 @@ print_r(bogoSort($list));
  * ボゴソート
  *
  * @param array $list
+ * @return array
  */
 function bogoSort($list): array
 {
