@@ -3,7 +3,14 @@
 fizzbuzz(100);
 
 
-function fizzbuzz($num) {
+/**
+ * FizzBuzz 再帰バージョン
+ *
+ * @param int $num
+ * @return void
+ */
+function fizzbuzz($num): void
+{
     if ($num > 1) {
         fizzbuzz($num -1);
     }
