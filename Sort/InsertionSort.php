@@ -38,6 +38,7 @@ function insertionSort(array $list): array
 {
     $max = count($list);
     for ($count = 1; $count < $max; $count++) {
+        // 挿入対象データ
         $tmp = $list[$count];
         for ($index = $count; $index >= 1 && $tmp < $list[$index -1]; $index--) {
             // 1個ずらして保存
