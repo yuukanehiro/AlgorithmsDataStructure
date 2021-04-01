@@ -81,7 +81,6 @@ print_r(searchDuplicatedKeysAndValues($array));
 //                     [0] => 9
 //                     [1] => 10
 //                 )
-
 //             [value] => pine
 //         )
 // )
