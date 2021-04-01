@@ -19,6 +19,7 @@ function searchDuplicatedValue(array $array): array
         }); // ["yyy" => 0, "zzz" => 1]
         return array_keys($duplicated_array); // ["yyy", "zzz"]
     }
+    return [];
 }
 
 
