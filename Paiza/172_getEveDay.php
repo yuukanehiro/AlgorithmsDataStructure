@@ -6,7 +6,7 @@
 
     function getEveDay(int $day): ?int
     {
-        if ($day < 2) {
+        if ($day < 2 || $day >= 32) {
             return null;
         }
         $eve_day = $day - 1;
