@@ -1,5 +1,8 @@
 <?php
 
+require_once("../vendor/autoload.php");
+use Illuminate\Support\Arr;
+
 // ソート用キー
 $sort_keys = [
     'id',
@@ -19,6 +22,7 @@ $users = [
         'skill' => "IT",
         'name' => "優さん",
         'id' => 1,
+        'BAD_KEY' => "想定しないキーと値だよ🐱"
     ],
     [
         'name' => "田中っち",
@@ -38,22 +42,6 @@ $users = [
     ],
 ];
 
-// ソート用にkeyとvalueを反転させる
-$sort_keys = array_flip($sort_keys);
-// array(6) {
-//     ["id"]=>
-//     int(0)
-//     ["name"]=>
-//     int(1)
-//     ["password"]=>
-//     int(2)
-//     ["skill"]=>
-//     int(3)
-//     ["role"]=>
-//     int(4)
-//     ["note"]=>
-//     int(5)
-// }
 
 // 実行
 var_dump(ukSortBySortKeys($users, $sort_keys));
@@ -114,13 +102,33 @@ var_dump(ukSortBySortKeys($users, $sort_keys));
  */
 function ukSortBySortKeys(array $data, array $sort_keys): array
 {
+    // ソート用にkeyとvalueを反転させる
+    $flipped_sort_keys = array_flip($sort_keys);
+    // array(6) {
+    //     ["id"]=>
+    //     int(0)
+    //     ["name"]=>
+    //     int(1)
+    //     ["password"]=>
+    //     int(2)
+    //     ["skill"]=>
+    //     int(3)
+    //     ["role"]=>
+    //     int(4)
+    //     ["note"]=>
+    //     int(5)
+    // }
+    $sorted_users = [];
     foreach ($data as $datum) {
+        // 想定しないデータを除去する
+        $datum = Arr::only($datum, $sort_keys);
+        // ソート
         // @see https://www.php.net/manual/ja/function.uksort.php
-        uksort($datum, function ($x, $y) use ($sort_keys) {
-            if ($sort_keys[$x] === $sort_keys[$y]) {
+        uksort($datum, function ($x, $y) use ($flipped_sort_keys) {
+            if ($flipped_sort_keys[$x] === $flipped_sort_keys[$y]) {
                 return 0;
             }
-            return ($sort_keys[$x] > $sort_keys[$y]) ? 1 : -1;
+            return ($flipped_sort_keys[$x] > $flipped_sort_keys[$y]) ? 1 : -1;
         });
         $sorted_users[$datum['id']] = $datum;
     }

@@ -5,3 +5,8 @@
 ## Sequence ... 数列
 ## Sort ... ソート
 ## Theorem ... 定理
+
+
+# インストール
+  
+$ composer install
