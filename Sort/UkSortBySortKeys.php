@@ -43,6 +43,48 @@ $users = [
 ];
 
 
+/**
+ * 配列を任意のソートキー配列でソートして返却
+ *
+ * @param array $data
+ * @param array $sort_keys
+ * @return array
+ */
+function ukSortBySortKeys(array $data, array $sort_keys): array
+{
+    // ソート用にkeyとvalueを反転させる
+    $flipped_sort_keys = array_flip($sort_keys);
+    // array(6) {
+    //     ["id"]=>
+    //     int(0)
+    //     ["name"]=>
+    //     int(1)
+    //     ["password"]=>
+    //     int(2)
+    //     ["skill"]=>
+    //     int(3)
+    //     ["role"]=>
+    //     int(4)
+    //     ["note"]=>
+    //     int(5)
+    // }
+    $sorted_data = [];
+    foreach ($data as $datum) {
+        // 想定しないデータを除去する
+        $datum = Arr::only($datum, $sort_keys);
+        // ソート
+        // @see https://www.php.net/manual/ja/function.uksort.php
+        uksort($datum, function ($x, $y) use ($flipped_sort_keys) {
+            if ($flipped_sort_keys[$x] === $flipped_sort_keys[$y]) {
+                return 0;
+            }
+            return ($flipped_sort_keys[$x] > $flipped_sort_keys[$y]) ? 1 : -1;
+        });
+        $sorted_data[$datum['id']] = $datum;
+    }
+    return $sorted_data;
+}
+
 // 実行
 var_dump(ukSortBySortKeys($users, $sort_keys));
 // array(3) {
@@ -92,45 +134,3 @@ var_dump(ukSortBySortKeys($users, $sort_keys));
 //       string(0) ""
 //     }
 // }
-
-/**
- * 配列を任意のソートキー配列でソートして返却
- *
- * @param array $data
- * @param array $sort_keys
- * @return array
- */
-function ukSortBySortKeys(array $data, array $sort_keys): array
-{
-    // ソート用にkeyとvalueを反転させる
-    $flipped_sort_keys = array_flip($sort_keys);
-    // array(6) {
-    //     ["id"]=>
-    //     int(0)
-    //     ["name"]=>
-    //     int(1)
-    //     ["password"]=>
-    //     int(2)
-    //     ["skill"]=>
-    //     int(3)
-    //     ["role"]=>
-    //     int(4)
-    //     ["note"]=>
-    //     int(5)
-    // }
-    $sorted_users = [];
-    foreach ($data as $datum) {
-        // 想定しないデータを除去する
-        $datum = Arr::only($datum, $sort_keys);
-        // ソート
-        // @see https://www.php.net/manual/ja/function.uksort.php
-        uksort($datum, function ($x, $y) use ($flipped_sort_keys) {
-            if ($flipped_sort_keys[$x] === $flipped_sort_keys[$y]) {
-                return 0;
-            }
-            return ($flipped_sort_keys[$x] > $flipped_sort_keys[$y]) ? 1 : -1;
-        });
-        $sorted_users[$datum['id']] = $datum;
-    }
-    return $sorted_users;
-}
