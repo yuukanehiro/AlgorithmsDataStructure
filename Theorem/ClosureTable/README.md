@@ -1,5 +1,14 @@
+
+## Usage
+
+ビルド
+```
 ClosureTable % docker-compose build --no-cache
 ClosureTable % docker-compose up -d
+```
+
+実行
+```
 ClosureTable % docker-compose exec closuretable-app ./main
 
 Root
@@ -8,6 +17,7 @@ Root
 ----Grandchild A2
 --Child B
 ----Grandchild B1
+```
 
 ## 経路取得
 
