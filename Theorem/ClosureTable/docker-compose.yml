@@ -1,0 +1,36 @@
+version: "3"
+services:
+  closuretable-app:
+    platform: linux/amd64
+    build: .
+    depends_on:
+    - db
+    tty: true
+    environment:
+      - MYSQL_DATABASE=closuretabledb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_HOST=db
+  db:
+    container_name: closuretable-db
+    platform: linux/amd64
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=closuretabledb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --innodb_file_per_table
+      --innodb_file_format=BARRACUDA
+      --innodb_large_prefix=1
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./migrations:/docker-entrypoint-initdb.d
+    ports:
+      - 19306:3306
+volumes:
+  db-data:
